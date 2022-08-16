@@ -2,29 +2,134 @@ function $(x) {
   return document.getElementById(x);
 }
 
-let guest = prompt('Please tell me your name.');
-console.log('Name: ' + guest);
-let block = $('guest');
-block.innerHTML += guest;
+window.onload = function() {
+  let guest = prompt('Please tell me your name.');
+  while(!guest) {
+    guest = prompt('C\'mon, just tell me.');
+  }
+  console.log('Name: ' + guest);
+  let block = $('guest');
+  block.innerHTML += guest;
+};
 
+let firstTry = true;
 
-// function greeting() {
-//   let name = prompt('Please tell me your name.');
-//   console.log('Name: ' + name);
-//   let age = prompt('How old are you?');
-//   console.log('Age: ' + age);
-//   let home = prompt('Where do you live?');
-//   console.log('Home: ' + home);
-//   let mood;
-//   do {
-//     mood = prompt('What is your mood, on a scale from 1-10? (10 being best)');
-//   } while(!(mood > 0 && mood <=10));
-//   console.log('Mood: ' + mood);
-//   let msg = `Greetings, my good friend, ${name}! ${age} years young? Long way to go!
-//   ${home} seems like a pretty nice place to live...
-//   I would also rate my mood as a ${Math.ceil(mood)}.`;
-//   alert(msg);
-//   //let block = document.getElementById('greeting');
-//   let block = $('greeting');
-//   block.innerHTML += msg;
-// }
+function loadGame() {
+  let space = $('quiz');
+  let hiddenOption = '<option value="coding">Coding!</option>';
+  let q =
+  `<div id="qa">
+      <ul>
+          <li>
+              <label for="q1">What is my favorite Pokemon?</label>
+              <select name="pokemon" id="q1">
+                  <option value="">-- Please select an option --</option>
+                  <option value="squirtle">Squirtle</option>
+                  <option value="charmander">Charmander</option>
+                  <option value="bulbasaur">Bulbasaur</option>
+                  <option value="pikachu">Pikachu</option>
+              </select>
+          </li>
+          <li>
+              <label for="q2">What kind of pet do I have?</label>
+              <select name="pet" id="q2">
+                  <option value="">-- Please select an option --</option>
+                  <option value="bird">Bird</option>
+                  <option value="cat">Cat</option>
+                  <option value="dog">Dog</option>
+                  <option value="lizard">Lizard</option>
+              </select>
+          </li>
+          <li>
+              <label for="q3">What is my lucky number?</label>
+              <select name="lucky-number" id="q3">
+                  <option value="">-- Please select an option --</option>
+                  <option value="13">13</option>
+                  <option value="3">3</option>
+                  <option value="5">5</option>
+                  <option value="28">28</option>
+              </select>
+          </li>
+          <li>
+              <label for="q4">What is my favorite food?</label>
+              <select name="food" id="q4">
+                  <option value="">-- Please select an option --</option>
+                  <option value="tacos">Tacos</option>
+                  <option value="sushi">Sushi</option>
+                  <option value="pizza">Pizza</option>
+                  <option value="salad">Salad</option>
+              </select>
+          </li>
+          <li>
+              <label for="q5">What is my favorite hobby?</label>
+              <select name="hobby" id="q5">
+                  <option value="">-- Please select an option --</option>
+                  <option value="eating">Eating</option>
+                  <option value="sleeping">Sleeping</option>
+                  <option value="climbing">Rock Climbing</option>
+                  <option value="diving">Diving</option>
+                  ${firstTry ? '' : hiddenOption}
+              </select>
+          </li>
+      </ul>
+      <button id="submit-game" onclick="answers()">Let's see how well you did...</button>
+  </div>`;
+  if($('game')) {
+    $('game').remove();
+  }
+  space.innerHTML += q;
+}
+
+function resetGame() {
+  $('qa').remove();
+  loadGame();
+}
+
+function answers() {
+  let space = $('quiz');
+  let sum = 0;
+  const answers = ['squirtle', 'dog', '13', 'sushi', 'coding'];
+  for (let i = 0; i < 5; i++) {
+    let ans = $(`q${i+1}`).value;
+    if (ans === answers[i]) {
+      sum++;
+    }
+  }
+  let a1 = $('q1').value;
+  let a2 = $('q2').value;
+  let a3 = $('q3').value;
+  let a4 = $('q4').value;
+  let a5 = $('q5').value;
+  let b = '';
+  if (firstTry) {
+    b = 'Trick question - it\'s ';
+  } else {
+    b = '';
+  }
+  let x =
+  `<div id="qa">
+      <h4>Answer Time...</h4>
+      <dl>
+          <dt><bold>Favorite Pokemon -</bold></dt>
+          <dd>Your Answer: ${a1}</dd>
+          <dd>Correct Answer: ${answers[0]}</dd>
+          <dt><bold>Pet -</bold></dt>
+          <dd>Your Answer: ${a2}</dd>
+          <dd>Correct Answer: ${answers[1]}</dd>
+          <dt><bold>Lucky Number -</bold></dt>
+          <dd>Your Answer: ${a3}</dd>
+          <dd>Correct Answer: ${answers[2]}</dd>
+          <dt><bold>Favorite Food -</bold></dt>
+          <dd>Your Answer: ${a4}</dd>
+          <dd>Correct Answer: ${answers[3]}</dd>
+          <dt><bold>Favorite Hobby -</bold></dt>
+          <dd>Your Answer: ${a5}</dd>
+          <dd>Correct Answer: ${b}${answers[4]}!!!</dd>
+      </dl>
+      <p>You got ${sum} out of 5 questions right!</p>
+      <button id="retake" onclick="resetGame()">Try again?</button>
+  </div>`;
+  $('qa').remove();
+  space.innerHTML += x;
+  firstTry = false;
+}

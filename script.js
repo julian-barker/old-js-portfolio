@@ -10,6 +10,7 @@ window.onload = function() {
   console.log('Name: ' + guest);
   let block = $('guest');
   block.innerHTML += guest;
+  alert(`Welcome, ${guest}!`);
 };
 
 let firstTry = true;
@@ -132,4 +133,34 @@ function answers() {
   $('qa').remove();
   space.innerHTML += x;
   firstTry = false;
+}
+
+function playGame2() {
+  let questions = [['Do I like Pokemon? (yes/no)', 'yes'], ['Do I have any pets? (yes/no)', 'yes'],
+    ['Do I live on the East Coast? (yes/no)', 'no'], ['Do I play video games? (yes/no)', 'yes'],
+    ['Have I gone skydiving (yes/no)', 'no']];
+  let count = 0;
+  for(let i = 0; i < 5; i++) {
+    let q = '';
+    while (!(q === 'yes' || q === 'no')) {
+      q = prompt(`${questions[i][0]}`);
+      if(typeof q === 'string') {
+        q = q.toLowerCase();
+      }
+    }
+    let match = (q === questions[i][1]);
+    switch(match) {
+      case true:
+        console.log(`Question ${i+1}:
+        Your response (${q}) is correct!`);
+        alert('correct!');
+        count++;
+        break;
+      default:
+        console.log(`Question ${i+1}:
+        Your response (${q}) is incorrect...`);
+        alert('Sorry, incorrect');
+    }
+  }
+  console.log(`You got ${count}/5 correct.`);
 }

@@ -1,7 +1,13 @@
 * {
-  border: 1px darkred solid;
+  /* border: 1px darkred solid; */
   padding: 4px;
   margin: 4px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+em {
+  margin: 0px;
+  padding: 0px;
 }
 
 header, main, footer {
@@ -36,10 +42,23 @@ footer {
   background-color: thistle;
 }
 
-#quiz {
+nav * {
+  display: flex;
+}
+
+li {
+  list-style-type: none;
+}
+
+main > * {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+#quiz, #quiz2 {
   border: 4px purple solid;
   border-radius: 8px;
-  background-color: lightblue;
+  background-color: khaki;
 }
 
 button {

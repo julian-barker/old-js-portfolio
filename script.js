@@ -182,7 +182,6 @@ function draw() {
 }
 
 function playGame3() {
-  let arr = [0,0,0];
   let diff = prompt('Input 1, 2, or 3 to play on Easy (1), Medium (2), or Hard (3). Invalid responses will default to Easy.');
   console.log(diff);
   let upper = 25;
@@ -218,7 +217,6 @@ function playGame3() {
 }
 
 function playGame4() {
-  let arr = [0,0,0];
   let diff = prompt('Input 1, 2, or 3 to play on Easy (1), Medium (2), or Hard (3). Invalid responses will default to Easy.');
   console.log(diff);
   let upper = 25;

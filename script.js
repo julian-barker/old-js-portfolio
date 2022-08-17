@@ -4,6 +4,10 @@ function $(x) {
   return document.getElementById(x);
 }
 
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
 window.onload = function() {
   let guest = prompt('Please tell me your name.');
   while(!guest) {
@@ -91,10 +95,11 @@ function resetGame() {
 function answers() {
   let space = $('quiz');
   let sum = 0;
-  const answers = ['squirtle', 'dog', '13', 'sushi', 'coding'];
+  let answers = [];
+  const correct = ['squirtle', 'dog', '13', 'sushi', 'coding'];
   for (let i = 0; i < 5; i++) {
-    let ans = $(`q${i+1}`).value;
-    if (ans === answers[i]) {
+    answers[i] = $(`q${i+1}`).value;
+    if (answers[i] === correct[i]) {
       sum++;
     }
   }
@@ -165,4 +170,107 @@ function playGame2() {
     }
   }
   console.log(`You got ${count}/5 correct.`);
+}
+
+draw();
+
+function draw() {
+  let can = $('canvas-1');
+  let ctx = can.getContext('2d');
+  ctx.fillStyle = '#FF0000';
+  ctx.fillRect(300, 100, 200, 200);
+}
+
+function playGame3() {
+  let arr = [0,0,0];
+  let diff = prompt('Input 1, 2, or 3 to play on Easy (1), Medium (2), or Hard (3). Invalid responses will default to Easy.');
+  console.log(diff);
+  let upper = 25;
+  switch(diff) {
+    case '2':
+      upper = 50;
+      break;
+    case '3':
+      upper = 100;
+      break;
+  }
+  let ans = Math.floor(Math.random() * upper + 1);
+  console.log(upper);
+  console.log('diff = ' + diff);
+  for(let i = 0; i < 4; i++) {
+    let guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${4 - i} guesses remaining.`));
+    while(isNaN(guess)) {
+      alert('Only number inputs are valid');
+      guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${4 - i} guesses remaining.`));
+    }
+    if(guess === ans) {
+      alert(`You got it correct! It was ${ans}`);
+      return;
+    } else if(guess < 1 || guess > upper) {
+      alert(`Please guess between 1 and ${upper}. You wasted a guess.`);
+    } else if(guess > ans) {
+      alert('Too high!');
+    } else {
+      alert('Too low!');
+    }
+  }
+  alert(`You are out of guesses. The answer was ${ans}. Sorry, better luck next time!`);
+}
+
+function playGame4() {
+  let arr = [0,0,0];
+  let diff = prompt('Input 1, 2, or 3 to play on Easy (1), Medium (2), or Hard (3). Invalid responses will default to Easy.');
+  console.log(diff);
+  let upper = 25;
+  switch(diff) {
+    case '2':
+      upper = 50;
+      break;
+    case '3':
+      upper = 100;
+      break;
+  }
+  let numAnswers = 5;
+  let answers = Array(numAnswers);
+  for (let i = 0; i < numAnswers; i++) {
+    let a;
+    let check = true;
+    do {
+      let exists = false;
+      a = Math.floor(Math.random() * upper + 1);
+      // console.log(a);
+      for (let j = 0; j < numAnswers; j++) {
+        if (a === answers[j]) {
+          exists = true;
+          break;
+        }
+      }
+      check = exists;
+    } while(check);
+    answers[i] = a;
+  }
+  console.log('Upper: ' + upper);
+  // console.log('diff = ' + diff);
+  let maxGuesses = 6;
+  let myGuesses = [];
+  for(let i = 0; i < maxGuesses; i++) {
+    let guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${maxGuesses - i} guesses remaining.`));
+    while(isNaN(guess)) {
+      alert('Only number inputs are valid');
+      guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${maxGuesses - i} guesses remaining.`));
+    }
+    myGuesses.push(guess);
+    if(guess < 1 || guess > upper) {
+      alert(`Please guess between 1 and ${upper}. You wasted a guess.`);
+    } else if(answers.includes(guess)) {
+      alert(`You got it correct! Possible answers were ${answers}
+      You got it in ${i + 1} guesses.`);
+      return;
+    } else {
+      alert('Sorry! Not quite');
+    }
+  }
+  alert(`You are out of guesses.Sorry, better luck next time!
+  Your guesses were ${myGuesses}.
+  Possible answers were ${answers}.`);
 }

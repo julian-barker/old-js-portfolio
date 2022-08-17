@@ -5,34 +5,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <title>Julian Barker</title>
 </head>
 <body>
     <header>
-        <img src="./" alt="Logo">
-        <nav>
-        <ul>
-            <li><a href="./">Link 1</a></li>
-            <li><a href="./">Link 2</a></li>
-            <li><a href="./">Link 3</a></li>
-        </ul>
-        </nav>
+        <div id="top-bar">
+            <div class="logo"><img src="./images/logo.jpeg" alt="Logo" width="120px" height="120px"></div>
+            <div id="bar-content">
+                <h2>A Pretty Neat Site</h2>
+                <nav>
+                    <ul>
+                        <li><a href="./">Link 1</a></li>
+                        <li><a href="./">Link 2</a></li>
+                        <li><a href="./">Link 3</a></li>
+                        <li><a href="./">Link 4</a></li>
+                        <li><a href="./">Link 5</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="logo"><img src="./images/logo.jpeg" alt="Logo" width="120px" height="120px"></div>
+        </div>
     </header>
     <main>
-        <h1>BarkCode</h1>
+        <h1>BarkCoder</h1>
         <p>
             Hi <span id="guest"></span>, I'm Julian!<br>I'm a <em>junior software developer</em> who loves <em>building</em> on the web, 
             <em>learning</em> about new tools and frameworks, and <em>expanding</em> my knowledge into other 
             fields like cyber security, AI/ML, and blockchain / distributed ledger technologies.
         </p>
-        <section id="quiz">
-            <h3>Guessing Game!</h3>
-            <button id="game" onclick="loadGame()">Press Me to Take a Little Quiz</button>
+        <section id="canvases">
+            <canvas id="canvas-1" width="800px" height="400px"></canvas>
         </section>
-        <section id="quiz2">
-            <h3>Guessing Game! (v2)</h3>
-            <button id="game2" onclick="playGame2()">Press Me to Take a Little Quiz</button>
+        <section id="quizzes">
+            <div id="quiz">
+                <h3>Guessing Game #1! (lab 02 without reading the directions...)</h3>
+                <button id="game" onclick="loadGame()">Press Me to Take a Little Quiz</button>
+            </div>
+            <div id="quiz2">
+                <h3>Guessing Game #2! (lab 02)</h3>
+                <button id="game2" onclick="playGame2()">Press Me to Take a Little Quiz</button>
+            </div>
+            <div id="quiz3">
+                <h3>Guessing Game #3! (lab 03.2)</h3>
+                <button id="game3" onclick="playGame3()">Press Me to Take a Little Quiz</button>
+            </div>
+            <div id="quiz4">
+                <h3>Guessing Game #4! (lab 03.3)</h3>
+                <button id="game4" onclick="playGame4()">Press Me to Take a Little Quiz</button>
+            </div>
         </section>
         <section id="bio">
             <h3>About Me</h3>
@@ -47,12 +68,12 @@
             </p>
         </section>
         <section id="portfolio">
-            <h3>My Projects</h3>
-            <ol id="project-list">
+            <h3>My Projects / Work Experience</h3>
+            <ul id="project-list">
                 <li>You're looking at it! This is my first and only project, as of now. More to come!</li>
-                <li>TBD</li>
-                <li>TBD</li>
-            </ol>
+                <li>I've also had 6 years of leadership experince in the military, to include some high-level human resources management</li>
+                <li>One summer, I was a camp counselor at my rock climbing camp. That's work experience, right?</li>
+            </ul>
         </section>
         <section id="hobbies">
             <h3>What Do I Like to Do?</h3>
@@ -66,6 +87,58 @@
                 anime, but i'll really watch anything except Grey's Anatomy. When it comes to realism, I draw the line at doctors being impaled 
                 by falling icicles at the hospital...
             </p>
+        </section>
+        <section>
+            <h3>Top 10s</h3>
+            <div id="top-10">
+                <section>
+                    <h4>Stories</h3>
+                    <p>At the end of the day, movies, TV shows, books, video games, and plays are all just different vehicles to tell stories. 
+                        Below are my top 10 stories, medium-agnostic. *** Note, I'm only really tied to #1 ***</p>
+                    <ol type="i">
+                        <li>One Piece</li>
+                        <li>The Lord of the Rings</li>
+                        <li>Halo</li>
+                        <li>Fallout 3</li>
+                        <li>Bioshock</li>
+                        <li>The Last of Us</li>
+                        <li>Westworld</li>
+                        <li>Star Wars</li>
+                        <li>Hamilton</li>
+                        <li>Everything made by Pixar</li>
+                    </ol>
+                </section>
+                <section>
+                    <h4>Foods</h4>
+                    <ol type="i">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ol>
+                </section>
+                <section>
+                    <h4>Superpowers</h4>
+                    <ol type="i">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ol>
+                </section>
+            </div>
         </section>
     </main>
     <footer>

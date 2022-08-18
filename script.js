@@ -195,11 +195,11 @@ function resetGame() {
 function answers() {
   let space = $('quiz');
   let sum = 0;
-  let answers = [];
-  const correct = ['squirtle', 'dog', '13', 'sushi', 'coding'];
+  let responses = [];
+  const answers = ['squirtle', 'dog', '13', 'sushi', 'coding'];
   for (let i = 0; i < 5; i++) {
-    answers[i] = $(`q${i+1}`).value;
-    if (answers[i] === correct[i]) {
+    responses[i] = $(`q${i+1}`).value;
+    if (responses[i] === answers[i]) {
       sum++;
     }
   }
@@ -209,6 +209,7 @@ function answers() {
   let a4 = $('q4').value;
   let a5 = $('q5').value;
   let b = '';
+  console.log(responses);
   if (firstTry) {
     b = 'Trick question - it\'s ';
   } else {

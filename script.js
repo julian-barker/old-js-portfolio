@@ -19,6 +19,106 @@ window.onload = function() {
   alert(`Welcome, ${guest}!`);
 };
 
+let upper = 25;
+let questions = [
+  ['Do I like Pokemon? (yes/no)', 'yes'],
+  ['Do I have any pets? (yes/no)', 'yes'],
+  ['Do I live on the East Coast? (yes/no)', 'no'],
+  ['Do I play video games? (yes/no)', 'yes'],
+  ['Have I gone skydiving (yes/no)', 'no'],
+  ['Guess a number between 1 and 25', Math.floor(Math.random() * upper + 1)],
+  ['Guess my favorite fruits', ['kiwi', 'pineapple', 'clementine', 'grapes', 'watermelon']]
+];
+
+let totalScore = 0;
+
+for(let i = 0; i < 7; i++) {
+  if(i === 5) {
+    //Question 6
+    let lives = 4;
+    let ans = questions[i][1];
+    let correct = false;
+    while(lives > 0) {
+      let response = Number(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
+      while(isNaN(response)) {
+        alert('Only number inputs are valid');
+        response = Number(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
+      }
+      if(response === ans) {
+        alert(`You got it correct! It was ${response}`);
+        totalScore++;
+        correct = true;
+        break;
+      } else if(response < 1 || response > upper) {
+        alert(`Please guess between 1 and ${upper}. You wasted a guess.`);
+      } else if(response > ans) {
+        alert('Too high!');
+      } else {
+        alert('Too low!');
+      }
+      lives--;
+    }
+    if(correct === false) {
+      alert(`Sorry, out of lives! The correct answer was ${ans}`);
+    }
+  } else if(i === 6) {
+    //Question 7
+    let lives = 6;
+    let correct = false;
+    let answers = questions[i][1];
+    console.log(answers);
+    while(!correct) {
+      while(lives > 0) {
+        let response = prompt(`What is one of my favorite fruits? You have ${lives} guesses remaining.`);
+        for (let ans of answers) {
+          console.log(ans);
+          if(ans === response) {
+            alert(`You got it correct! The correct answers were ${answers}`);
+            totalScore++;
+            correct = true;
+            lives = 0;
+            break;
+          }
+        }
+        lives--;
+      }
+      if(correct === false) {
+        alert(`Sorry, out of lives! Correct answers were ${answers}`);
+        break;
+      }
+    }
+  } else {
+    let response = '';
+    let match;
+    while (!(response === 'yes' || response === 'no')) {
+      response = prompt(`${questions[i][0]}`);
+      if(typeof response === 'string') {
+        response = response.toLowerCase();
+      }
+    }
+    match = (response === questions[i][1]);
+    switch(match) {
+      case true:
+        console.log(`Question ${i+1}:
+        Your response (${response}) is correct!`);
+        alert('correct!');
+        totalScore++;
+        console.log(totalScore);
+        break;
+      default:
+        console.log(`Question ${i+1}:
+        Your response (${response}) is incorrect...`);
+        alert('Sorry, incorrect');
+    }
+    if(i === 4) {
+      let msg = `You got ${totalScore}/5 correct.`;
+      console.log(msg);
+      alert(msg);
+    }
+  }
+}
+alert(`Your total score is ${totalScore}/7!`);
+
 let firstTry = true;
 
 function loadGame() {
@@ -142,11 +242,19 @@ function answers() {
   firstTry = false;
 }
 
+function playGameFull() {
+  let score1 = playGame2();
+  let score2 = playGame3();
+  let score3 = playGame4();
+  let score = score1 + score2 + score3;
+  alert(`Your total score is: ${score}/7.`);
+}
+
 function playGame2() {
   let questions = [['Do I like Pokemon? (yes/no)', 'yes'], ['Do I have any pets? (yes/no)', 'yes'],
     ['Do I live on the East Coast? (yes/no)', 'no'], ['Do I play video games? (yes/no)', 'yes'],
     ['Have I gone skydiving (yes/no)', 'no']];
-  let count = 0;
+  let score = 0;
   for(let i = 0; i < 5; i++) {
     let q = '';
     while (!(q === 'yes' || q === 'no')) {
@@ -161,7 +269,7 @@ function playGame2() {
         console.log(`Question ${i+1}:
         Your response (${q}) is correct!`);
         alert('correct!');
-        count++;
+        score++;
         break;
       default:
         console.log(`Question ${i+1}:
@@ -169,9 +277,10 @@ function playGame2() {
         alert('Sorry, incorrect');
     }
   }
-  let msg = `You got ${count}/5 correct.`;
+  let msg = `You got ${score}/5 correct.`;
   console.log(msg);
   alert(msg);
+  return score;
 }
 
 draw();
@@ -206,7 +315,7 @@ function playGame3() {
     }
     if(guess === ans) {
       alert(`You got it correct! It was ${ans}`);
-      return;
+      return 1;
     } else if(guess < 1 || guess > upper) {
       alert(`Please guess between 1 and ${upper}. You wasted a guess.`);
     } else if(guess > ans) {
@@ -216,6 +325,7 @@ function playGame3() {
     }
   }
   alert(`You are out of guesses. The answer was ${ans}. Sorry, better luck next time!`);
+  return 0;
 }
 
 function playGame4() {
@@ -265,7 +375,7 @@ function playGame4() {
     } else if(answers.includes(guess)) {
       alert(`You got it correct! Possible answers were ${answers}
       You got it in ${i + 1} guesses.`);
-      return;
+      return 1;
     } else {
       alert('Sorry! Not quite');
     }
@@ -273,4 +383,5 @@ function playGame4() {
   alert(`You are out of guesses.Sorry, better luck next time!
   Your guesses were ${myGuesses}.
   Possible answers were ${answers}.`);
+  return 0;
 }

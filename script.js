@@ -14,13 +14,13 @@ window.onload = function() {
     guest = prompt('C\'mon, just tell me.');
   }
   console.log('Name: ' + guest);
-  let block = $('guest');
+  const block = $('guest');
   block.innerHTML += guest;
   alert(`Welcome, ${guest}!`);
 };
 
-let upper = 25;
-let questions = [
+const upper = 25;
+const questions = [
   ['Do I like Pokemon? (yes/no)', 'yes'],
   ['Do I have any pets? (yes/no)', 'yes'],
   ['Do I live on the East Coast? (yes/no)', 'no'],
@@ -36,13 +36,13 @@ for(let i = 0; i < 7; i++) {
   if(i === 5) {
     //Question 6
     let lives = 4;
-    let ans = questions[i][1];
+    const ans = questions[i][1];
     let correct = false;
     while(lives > 0) {
-      let response = Number(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
+      let response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
       while(isNaN(response)) {
         alert('Only number inputs are valid');
-        response = Number(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
+        response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
       }
       if(response === ans) {
         alert(`You got it correct! It was ${response}`);
@@ -65,7 +65,7 @@ for(let i = 0; i < 7; i++) {
     //Question 7
     let lives = 6;
     let correct = false;
-    let answers = questions[i][1];
+    const answers = questions[i][1];
     console.log(answers);
     while(!correct) {
       while(lives > 0) {
@@ -89,15 +89,15 @@ for(let i = 0; i < 7; i++) {
     }
   } else {
     let response = '';
-    let match;
+    let correct;
     while (!(response === 'yes' || response === 'no')) {
       response = prompt(`${questions[i][0]}`);
       if(typeof response === 'string') {
         response = response.toLowerCase();
       }
     }
-    match = (response === questions[i][1]);
-    switch(match) {
+    correct = (response === questions[i][1]);
+    switch(correct) {
       case true:
         console.log(`Question ${i+1}:
         Your response (${response}) is correct!`);
@@ -264,8 +264,8 @@ function playGame2() {
         q = q.toLowerCase();
       }
     }
-    let match = (q === questions[i][1]);
-    switch(match) {
+    let correct = (q === questions[i][1]);
+    switch(correct) {
       case true:
         console.log(`Question ${i+1}:
         Your response (${q}) is correct!`);
@@ -309,10 +309,10 @@ function playGame3() {
   console.log(upper);
   console.log('diff = ' + diff);
   for(let i = 0; i < 4; i++) {
-    let guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${4 - i} guesses remaining.`));
+    let guess = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${4 - i} guesses remaining.`));
     while(isNaN(guess)) {
       alert('Only number inputs are valid');
-      guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${4 - i} guesses remaining.`));
+      guess = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${4 - i} guesses remaining.`));
     }
     if(guess === ans) {
       alert(`You got it correct! It was ${ans}`);
@@ -365,10 +365,10 @@ function playGame4() {
   let maxGuesses = 6;
   let myGuesses = [];
   for(let i = 0; i < maxGuesses; i++) {
-    let guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${maxGuesses - i} guesses remaining.`));
+    let guess = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${maxGuesses - i} guesses remaining.`));
     while(isNaN(guess)) {
       alert('Only number inputs are valid');
-      guess = Number(prompt(`Guess a number between 1 and ${upper}. You have ${maxGuesses - i} guesses remaining.`));
+      guess = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${maxGuesses - i} guesses remaining.`));
     }
     myGuesses.push(guess);
     if(guess < 1 || guess > upper) {

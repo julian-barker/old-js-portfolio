@@ -169,7 +169,9 @@ function playGame2() {
         alert('Sorry, incorrect');
     }
   }
-  console.log(`You got ${count}/5 correct.`);
+  let msg = `You got ${count}/5 correct.`;
+  console.log(msg);
+  alert(msg);
 }
 
 draw();

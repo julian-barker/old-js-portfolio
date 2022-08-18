@@ -130,6 +130,7 @@ main > section {
 
 #canvas-1 {
   border: 2px var(--bdr-clr) solid;
+  background-color: lightgrey;
 }
 
 #guest {

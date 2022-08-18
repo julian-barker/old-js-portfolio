@@ -13,6 +13,16 @@ window.onbeforeunload = function () {
 let user;
 // ensure content exists to insert into
 window.onload = function() {
+  greet();
+  draw();
+};
+
+
+
+
+
+// greet user upon visiting the site
+function greet() {
   user = prompt('Please tell me your name.');
   while(!user) {
     user = prompt('C\'mon, just tell me.');
@@ -21,119 +31,174 @@ window.onload = function() {
   const block = $('user');
   block.innerHTML += user;
   alert(`Welcome, ${user}!`);
-};
+}
+
+
+
+
 
 // game version 1 (as prescribed by reqs, prompted at page load)
 // 7 questions with a total score at the end
-const upper = 25;
-const questions = [
-  ['Do I like Pokemon? (yes/no)', 'yes'],
-  ['Do I have any pets? (yes/no)', 'yes'],
-  ['Do I live on the East Coast? (yes/no)', 'no'],
-  ['Do I play video games? (yes/no)', 'yes'],
-  ['Have I gone skydiving (yes/no)', 'no'],
-  ['Guess a number between 1 and 25', Math.floor(Math.random() * upper + 1)],
-  ['Guess my favorite fruits', ['kiwi', 'pineapple', 'clementine', 'grapes', 'watermelon']]
-];
+// const upper = 25;
+// const questions = [
+//   ['Do I like Pokemon? (yes/no)', 'yes'],
+//   ['Do I have any pets? (yes/no)', 'yes'],
+//   ['Do I live on the East Coast? (yes/no)', 'no'],
+//   ['Do I play video games? (yes/no)', 'yes'],
+//   ['Have I gone skydiving (yes/no)', 'no'],
+//   ['Guess a number between 1 and 25', Math.floor(Math.random() * upper + 1)],
+//   ['Guess my favorite fruits', ['kiwi', 'pineapple', 'clementine', 'grapes', 'watermelon']]
+// ];
 
-let totalScore = 0;
+// let totalScore = 0;
 
-for(let i = 0; i < 7; i++) {
-  if(i === 5) {
-    //Question 6
-    let lives = 4;
-    const ans = questions[i][1];
-    let correct = false;
-    while(lives > 0) {
-      let response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
-      while(isNaN(response)) {
-        alert('Only number inputs are valid');
-        response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
-      }
-      if(response === ans) {
-        alert(`You got it correct! It was ${response}`);
-        totalScore++;
-        correct = true;
-        break;
-      } else if(response < 1 || response > upper) {
-        alert(`Please guess between 1 and ${upper}. You wasted a guess.`);
-      } else if(response > ans) {
-        alert('Too high!');
-      } else {
-        alert('Too low!');
-      }
-      lives--;
-    }
-    if(correct === false) {
-      alert(`Sorry, out of lives! The correct answer was ${ans}`);
-    }
-  } else if(i === 6) {
-    //Question 7
-    let lives = 6;
-    let correct = false;
-    const answers = questions[i][1];
-    console.log(answers);
-    while(!correct) {
-      while(lives > 0) {
-        let response = prompt(`What is one of my favorite fruits? You have ${lives} guesses remaining.`);
-        for (let ans of answers) {
-          console.log(ans);
-          if(ans === response) {
-            alert(`You got it correct! The correct answers were ${answers}`);
-            totalScore++;
-            correct = true;
-            lives = 0;
-            break;
-          }
-        }
-        lives--;
-      }
-      if(correct === false) {
-        alert(`Sorry, out of lives! Correct answers were ${answers}`);
-        break;
-      }
-    }
-  } else {
-    let response = '';
-    let correct;
-    while (!(response === 'yes' || response === 'no')) {
-      response = prompt(`${questions[i][0]}`);
-      if(typeof response === 'string') {
-        response = response.toLowerCase();
-      }
-    }
-    correct = (response === questions[i][1]);
-    switch(correct) {
-      case true:
-        console.log(`Question ${i+1}:
-        Your response (${response}) is correct!`);
-        alert('correct!');
-        totalScore++;
-        console.log(totalScore);
-        break;
-      default:
-        console.log(`Question ${i+1}:
-        Your response (${response}) is incorrect...`);
-        alert('Sorry, incorrect');
-    }
-    if(i === 4) {
-      let msg = `You got ${totalScore}/5 correct.`;
-      console.log(msg);
-      alert(msg);
-    }
-  }
+// for(let i = 0; i < 7; i++) {
+//   if(i === 5) {
+//     //Question 6
+//     let lives = 4;
+//     const ans = questions[i][1];
+//     let correct = false;
+//     while(lives > 0) {
+//       let response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
+//       while(isNaN(response)) {
+//         alert('Only number inputs are valid');
+//         response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
+//       }
+//       if(response === ans) {
+//         alert(`You got it correct! It was ${response}`);
+//         totalScore++;
+//         correct = true;
+//         break;
+//       } else if(response < 1 || response > upper) {
+//         alert(`Please guess between 1 and ${upper}. You wasted a guess.`);
+//       } else if(response > ans) {
+//         alert('Too high!');
+//       } else {
+//         alert('Too low!');
+//       }
+//       lives--;
+//     }
+//     if(correct === false) {
+//       alert(`Sorry, out of lives! The correct answer was ${ans}`);
+//     }
+//   } else if(i === 6) {
+//     //Question 7
+//     let lives = 6;
+//     let correct = false;
+//     const answers = questions[i][1];
+//     console.log(answers);
+//     while(!correct) {
+//       while(lives > 0) {
+//         let response = prompt(`What is one of my favorite fruits? You have ${lives} guesses remaining.`);
+//         for (let ans of answers) {
+//           console.log(ans);
+//           if(ans === response) {
+//             alert(`You got it correct! The correct answers were ${answers}`);
+//             totalScore++;
+//             correct = true;
+//             lives = 0;
+//             break;
+//           }
+//         }
+//         lives--;
+//       }
+//       if(correct === false) {
+//         alert(`Sorry, out of lives! Correct answers were ${answers}`);
+//         break;
+//       }
+//     }
+//   } else {
+//     let response = '';
+//     let correct;
+//     while (!(response === 'yes' || response === 'no')) {
+//       response = prompt(`${questions[i][0]}`);
+//       if(typeof response === 'string') {
+//         response = response.toLowerCase();
+//       }
+//     }
+//     correct = (response === questions[i][1]);
+//     switch(correct) {
+//       case true:
+//         console.log(`Question ${i+1}:
+//         Your response (${response}) is correct!`);
+//         alert('correct!');
+//         totalScore++;
+//         console.log(totalScore);
+//         break;
+//       default:
+//         console.log(`Question ${i+1}:
+//         Your response (${response}) is incorrect...`);
+//         alert('Sorry, incorrect');
+//     }
+//     if(i === 4) {
+//       let msg = `You got ${totalScore}/5 correct.`;
+//       console.log(msg);
+//       alert(msg);
+//     }
+//   }
+// }
+// alert(`Your total score is ${totalScore}/7!`);
+
+
+
+
+
+
+
+
+function draw() {
+  let can = $('canvas-1');
+  let ctx = can.getContext('2d');
+  let x = 0;
+  let y = 0;
+  let gradient = ctx.createLinearGradient(x, y, 800, 300);
+  gradient.addColorStop(0, 'green');
+  gradient.addColorStop(0.5, 'yellow');
+  gradient.addColorStop(1, 'red');
+  ctx.fillStyle = gradient;
+  ctx.textAlign = 'center';
+  ctx.fillRect(100, 250, 600, 100);
+  ctx.strokeRect(100, 250, 600, 100);
+  ctx.font = ('144px Comic Sans MS');
+  ctx.fillText('Wowee!!!', can.width/2, can.height/2);
+  ctx.strokeText('Wowee!!!', can.width/2, can.height/2);
 }
-alert(`Your total score is ${totalScore}/7!`);
+
+
+
+
+
+
 
 
 // Multiple choice quiz taking advantage of DOM manipulation
-let firstTry = true;
+const mcg = {
+  space: 'quiz1',
+  state: '',
+  firstTry: true
+};
+
+
+function switchGameState() {
+  switch(mcg.state) {
+    case 'mcg-loaded':
+      showAnswers();
+      break;
+    case 'mcg-answers':
+      resetGame();
+      break;
+    default:
+      loadGame();
+  }
+}
 
 function loadGame() {
-  let space = $('quiz');
+  const space = $(mcg.space);
+  console.log(space);
+  mcg.state = 'mcg-loaded';
   let hiddenOption = '<option value="coding">Coding!</option>';
-  let q =
-  `<div id="qa">
+  let newContent =
+  `<div id="${mcg.state}">
       <ul>
           <li>
               <label for="q1">What is my favorite Pokemon?</label>
@@ -183,25 +248,32 @@ function loadGame() {
                   <option value="sleeping">Sleeping</option>
                   <option value="climbing">Rock Climbing</option>
                   <option value="diving">Diving</option>
-                  ${firstTry ? '' : hiddenOption}
+                  ${mcg.firstTry ? '' : hiddenOption}
               </select>
           </li>
       </ul>
-      <button id="submit-game" onclick="showAnswers()">Let's see how well you did...</button>
+      <button id="submit-game" onclick="switchGameState()">Let's see how well you did...</button>
   </div>`;
   if($('game')) {
     $('game').remove();
   }
-  space.innerHTML += q;
+  space.innerHTML += newContent;
 }
 
+
+
 function resetGame() {
-  $('qa').remove();
+  $(mcg.state).remove();
   loadGame();
 }
 
+
+
 function showAnswers() {
-  let space = $('quiz');
+  const space = $(mcg.space);
+  console.log(space);
+  const currState = mcg.state;
+  mcg.state = 'mcg-answers';
   let sum = 0;
   let responses = [];
   const answers = ['squirtle', 'dog', '13', 'sushi', 'coding'];
@@ -218,13 +290,13 @@ function showAnswers() {
   let a5 = $('q5').value;
   let b = '';
   console.log(responses);
-  if (firstTry) {
+  if (mcg.firstTry) {
     b = 'Trick question - it\'s ';
   } else {
     b = '';
   }
-  let x =
-  `<div id="qa">
+  let newContent =
+  `<div id="${mcg.state}">
       <h4>Answer Time...</h4>
       <dl>
           <dt><bold>Favorite Pokemon -</bold></dt>
@@ -244,12 +316,18 @@ function showAnswers() {
           <dd>Correct Answer: ${b}${answers[4]}!!!</dd>
       </dl>
       <p>You got ${sum} out of 5 questions right!</p>
-      <button id="retake" onclick="resetGame()">Try again?</button>
+      <button id="retake" onclick="switchGameState()">Try again?</button>
   </div>`;
-  $('qa').remove();
-  space.innerHTML += x;
-  firstTry = false;
+  $(currState).remove();
+  space.innerHTML += newContent;
+  mcg.firstTry = false;
 }
+
+
+
+
+
+
 
 
 // second implementation of 7-question quiz using functions and starting on button press
@@ -260,6 +338,8 @@ function playGameFull() {
   let score = score1 + score2 + score3;
   alert(`Your total score is: ${score}/7.`);
 }
+
+
 
 function playGame2() {
   let questions = [['Do I like Pokemon? (yes/no)', 'yes'], ['Do I have any pets? (yes/no)', 'yes'],
@@ -294,14 +374,7 @@ function playGame2() {
   return score;
 }
 
-draw();
 
-function draw() {
-  let can = $('canvas-1');
-  let ctx = can.getContext('2d');
-  ctx.fillStyle = '#FF0000';
-  ctx.fillRect(300, 100, 200, 200);
-}
 
 function playGame3() {
   let diff = prompt('Input 1, 2, or 3 to play on Easy (1), Medium (2), or Hard (3). Invalid responses will default to Easy.');
@@ -338,6 +411,8 @@ function playGame3() {
   alert(`You are out of guesses. The answer was ${ans}. Sorry, better luck next time!`);
   return 0;
 }
+
+
 
 function playGame4() {
   let diff = prompt('Input 1, 2, or 3 to play on Easy (1), Medium (2), or Hard (3). Invalid responses will default to Easy.');

@@ -1,24 +1,30 @@
 'use strict';
 
+//declare shortcut function
 function $(x) {
   return document.getElementById(x);
 }
 
+// scroll to top on reload
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 };
 
+let user;
+// ensure content exists to insert into
 window.onload = function() {
-  let guest = prompt('Please tell me your name.');
-  while(!guest) {
-    guest = prompt('C\'mon, just tell me.');
+  user = prompt('Please tell me your name.');
+  while(!user) {
+    user = prompt('C\'mon, just tell me.');
   }
-  console.log('Name: ' + guest);
-  const block = $('guest');
-  block.innerHTML += guest;
-  alert(`Welcome, ${guest}!`);
+  console.log('Name: ' + user);
+  const block = $('user');
+  block.innerHTML += user;
+  alert(`Welcome, ${user}!`);
 };
 
+// game version 1 (as prescribed by reqs, prompted at page load)
+// 7 questions with a total score at the end
 const upper = 25;
 const questions = [
   ['Do I like Pokemon? (yes/no)', 'yes'],
@@ -119,6 +125,8 @@ for(let i = 0; i < 7; i++) {
 }
 alert(`Your total score is ${totalScore}/7!`);
 
+
+// Multiple choice quiz taking advantage of DOM manipulation
 let firstTry = true;
 
 function loadGame() {
@@ -179,7 +187,7 @@ function loadGame() {
               </select>
           </li>
       </ul>
-      <button id="submit-game" onclick="answers()">Let's see how well you did...</button>
+      <button id="submit-game" onclick="showAnswers()">Let's see how well you did...</button>
   </div>`;
   if($('game')) {
     $('game').remove();
@@ -192,7 +200,7 @@ function resetGame() {
   loadGame();
 }
 
-function answers() {
+function showAnswers() {
   let space = $('quiz');
   let sum = 0;
   let responses = [];
@@ -243,6 +251,8 @@ function answers() {
   firstTry = false;
 }
 
+
+// second implementation of 7-question quiz using functions and starting on button press
 function playGameFull() {
   let score1 = playGame2();
   let score2 = playGame3();

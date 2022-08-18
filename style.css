@@ -137,7 +137,7 @@ main > section {
   padding: 0px;
 }
 
-#quizzes > * {
+#quizzes > div {
   border: 4px var(--bdr-clr) solid;
   border-radius: 8px;
   background-color: khaki;

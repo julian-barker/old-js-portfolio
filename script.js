@@ -15,6 +15,7 @@ let user;
 window.onload = function() {
   greet();
   draw();
+  playGameFull();
 };
 
 
@@ -336,7 +337,7 @@ function playGameFull() {
   let score2 = playGame3();
   let score3 = playGame4();
   let score = score1 + score2 + score3;
-  alert(`Your total score is: ${score}/7.`);
+  alert(`${user}, your total score is: ${score}/7.`);
 }
 
 
@@ -368,7 +369,7 @@ function playGame2() {
         alert('Sorry, incorrect');
     }
   }
-  let msg = `You got ${score}/5 correct.`;
+  let msg = `${user}, you got ${score}/5 correct.`;
   console.log(msg);
   alert(msg);
   return score;

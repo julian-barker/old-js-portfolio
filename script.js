@@ -13,11 +13,11 @@ window.onbeforeunload = function () {
 let user;
 // ensure content exists to insert into
 window.onload = function() {
-  //greet();
+  greet();
   drawClock();
   drawBounce();
   drawTest();
-  // playGameFull();
+  playGameFull();
 };
 
 
@@ -276,11 +276,49 @@ function drawBounce() {
   const bgCtx = bgCan.getContext('2d');
   const ballCan = $('bounce-ball');
   const ballCtx = ballCan.getContext('2d');
+  const rad = 15;
+  const groundLevel = 60;
 
-  drawBounceBG();
+  drawBounceBG(bgCan, bgCtx, groundLevel);
+  setInterval(drawBounceBall, 20, ballCan, ballCtx, groundLevel, rad);
 }
 
-function drawBounceBG() {}
+function drawBounceBG(can, ctx, ground) {
+  const wid = can.width;
+  const ht = can.height;
+  const grad = ctx.createLinearGradient(0, 0, 0, ht);
+
+  grad.addColorStop(0, 'cyan');
+  grad.addColorStop(.5, 'pink');
+  grad.addColorStop(1, 'orange');
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, wid, ht);
+  ctx.fillStyle = 'saddlebrown';
+  ctx.fillRect(0, ht - ground, wid, ground);
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, ht - ground, wid, 15);
+  ctx.strokeRect(0, ht - ground, wid, 15);
+  ctx.strokeRect(0, ht - ground, wid, ground);
+}
+
+function drawBounceBall(can, ctx, ground, rad) {
+  const now = new Date();
+  const s = now.getSeconds();
+  const ms = now.getMilliseconds() / 1000;
+  const t = s%6 + ms;
+  // console.log(t);
+  const x = can.width / 6 * t;
+  const y = can.height - (Math.abs(Math.sin(t*Math.PI - Math.PI/4*3)) * can.height * .6) - ground - rad + 5;
+  //console.log(y);
+
+  ctx.clearRect(0, 0, can.width, can.height);
+  ctx.beginPath();
+  ctx.fillStyle = '#444';
+  ctx.ellipse(x, y, rad, rad, 0, 0, 2 * Math.PI);
+  ctx.fill();
+  return can, ctx;
+}
 
 
 
@@ -289,9 +327,7 @@ function drawBounceBG() {}
 function drawTest() {
   let can = $('canvas-2');
   let ctx = can.getContext('2d');
-  let x = 0;
-  let y = 0;
-  let gradient = ctx.createLinearGradient(x, y, 800, 300);
+  let gradient = ctx.createLinearGradient(0, 0, 800, 300);
 
   gradient.addColorStop(0, 'green');
   gradient.addColorStop(0.5, 'yellow');
@@ -300,11 +336,21 @@ function drawTest() {
   ctx.fillStyle = gradient;
   ctx.textAlign = 'center';
 
-  ctx.fillRect(200, 250, 400, 50);
-  ctx.strokeRect(200, 250, 400, 50);
+  // ctx.fillRect(200, 200, 400, 50);
+  // ctx.strokeRect(200, 200, 400, 50);
   ctx.font = ('108px Comic Sans MS');
   ctx.fillText('OooWeee!!!', can.width/2, can.height/2);
   ctx.strokeText('OooWeee!!!', can.width/2, can.height/2);
+
+  ctx.beginPath();
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 20;
+  ctx.lineCap = 'round';
+  ctx.moveTo(150, 230);
+  for (let i = 0; i < 200; i++) {
+    ctx.lineTo(150 + 2.5*i, Math.sin(i/50*Math.PI)*30 + 230);
+  }
+  ctx.stroke();
 }
 
 

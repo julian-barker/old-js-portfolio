@@ -129,11 +129,6 @@ main > section {
   font-weight: bold;
 }
 
-#canvas-1 {
-  border: 2px var(--bdr-clr) solid;
-  background-color: lightgrey;
-}
-
 #guest {
   margin: 0px;
   padding: 0px;
@@ -193,6 +188,11 @@ dt {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.graphics {
+  border: 2px var(--bdr-clr) solid;
+  background-color: lightgrey;
 }
 
 .graphics > *:not(:last-child) {

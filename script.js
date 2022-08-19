@@ -161,8 +161,8 @@ function draw() {
   ctx.fillRect(100, 250, 600, 100);
   ctx.strokeRect(100, 250, 600, 100);
   ctx.font = ('144px Comic Sans MS');
-  ctx.fillText('Wowee!!!', can.width/2, can.height/2);
-  ctx.strokeText('Wowee!!!', can.width/2, can.height/2);
+  ctx.fillText('OooWeee!!!', can.width/2, can.height/2);
+  ctx.strokeText('OooWeee!!!', can.width/2, can.height/2);
 }
 
 

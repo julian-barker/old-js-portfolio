@@ -1,8 +1,8 @@
 :root {
-  --body-clr: rgb(239, 211, 168);
-  --hdr-clr: rgb(222, 158, 158);
-  --main-clr: rgb(225, 184, 191);
-  --ftr-clr: rgb(187, 164, 187);
+  --body-clr: rgba(239, 211, 168, 1);
+  --hdr-clr: rgba(186, 198, 128, 0.9);
+  --main-clr: rgba(145, 162, 118, 0.9);
+  --ftr-clr: rgba(110, 129, 105, 0.9);
   --bdr-clr: rgb(221, 158, 0);
 }
 
@@ -21,15 +21,20 @@ em {
 header, main, footer {
   border: 12px var(--bdr-clr) ridge;
   border-radius: 16px;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 24px;
+  margin-bottom: 24px;
   box-shadow: 8px 8px 12px 2px #2226;
 }
 
 body {
+  background: url(./images/bg1.jpeg) fixed center / cover;
   display: flex;
   flex-direction: column;
   background-color: var(--body-clr);
+}
+
+body > * {
+  background
 }
 
 header {
@@ -118,9 +123,9 @@ h1 {
 
 main > section {
   border: 6px var(--bdr-clr) dashed;
-  background-color: rgb(185, 142, 185);
-  width: 95%;
-  max-width: 95%;
+  background-color: rgb(169, 150, 169);
+  width: 90%;
+  max-width: 90%;
 }
 
 #guest {

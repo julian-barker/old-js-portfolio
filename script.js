@@ -1,6 +1,6 @@
 'use strict';
 
-//declare shortcut function
+// declare shortcut function
 function $(x) {
   return document.getElementById(x);
 }
@@ -13,9 +13,11 @@ window.onbeforeunload = function () {
 let user;
 // ensure content exists to insert into
 window.onload = function() {
-  greet();
-  draw();
-  playGameFull();
+  //greet();
+  drawClock();
+  drawBounce();
+  drawTest();
+  // playGameFull();
 };
 
 
@@ -144,29 +146,166 @@ function greet() {
 
 
 
+function drawClock() {
+  const can = $('clock-face');
+  const canHands = $('clock-hands');
+  const ctx = can.getContext('2d');
+  const ctxHands = canHands.getContext('2d');
+
+  const rad = can.width / 2 * .8;
+  const width = can.width;
+  const height = can.height;
+  const grad = ctx.createLinearGradient(0, 0, width, height);
+
+  ctx.fillStyle = grad;
+  grad.addColorStop(0, 'magenta');
+  grad.addColorStop(.5, 'yellow');
+  grad.addColorStop(1, 'cyan');
+  ctx.fillRect(0, 0, width, height);
+  ctx.translate(width / 2, height / 2);
+  ctxHands.translate(canHands.width / 2, canHands.height / 2);
+
+  drawClockFace(ctx, rad);
+  drawClockNums(ctx, rad);
+  setInterval(drawTime, 1000, ctxHands, rad);
+}
 
 
+function drawClockFace(ctx, rad) {
+  const pi = Math.PI;
+  const grad = ctx.createRadialGradient(0, 0, rad * .95, 0, 0, rad * 1.05);
 
-function draw() {
-  let can = $('canvas-1');
-  let ctx = can.getContext('2d');
-  let x = 0;
-  let y = 0;
-  let gradient = ctx.createLinearGradient(x, y, 800, 300);
-  gradient.addColorStop(0, 'green');
-  gradient.addColorStop(0.5, 'yellow');
-  gradient.addColorStop(1, 'red');
-  ctx.fillStyle = gradient;
+  grad.addColorStop(0, '#222');
+  grad.addColorStop(.5, '#BBB');
+  grad.addColorStop(1, '#222');
+
+  ctx.fillStyle = '#DDD';
+  ctx.ellipse(0, 0, rad, rad, 0, 0, 2 * pi);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = rad * .1;
+  ctx.arc(0, 0, rad, 0, 2 * pi);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.fillStyle = '#222';
+  ctx.ellipse(0, 0, rad * .05, rad * .05, 0, 0, 2 * pi);
+  ctx.fill();
+}
+
+
+function drawClockNums(ctx, rad) {
+  const dist = rad * .85;
+
+  ctx.font = '18px Arial';
   ctx.textAlign = 'center';
-  ctx.fillRect(100, 250, 600, 100);
-  ctx.strokeRect(100, 250, 600, 100);
-  ctx.font = ('144px Comic Sans MS');
-  ctx.fillText('OooWeee!!!', can.width/2, can.height/2);
-  ctx.strokeText('OooWeee!!!', can.width/2, can.height/2);
+  ctx.textBaseline = 'middle';
+
+  for (let i = 1; i < 13; i++) {
+    const a = Math.PI / 6 * i;
+    //ctx.beginPath();
+    ctx.rotate(a);
+    ctx.translate(0, -dist);
+    ctx.rotate(-a);
+    ctx.fillText(i, 0, 1);
+    ctx.rotate(a);
+    ctx.translate(0, dist);
+    ctx.rotate(-a);
+  }
+}
+
+
+function drawTime(ctx, rad) {
+  const pi = Math.PI;
+  const now = new Date();
+  const hrs = now.getHours();
+  const min = now.getMinutes();
+  const sec = now.getSeconds();
+  const hrHand = ((hrs % 12) * pi / 6) + (min * pi / 6 / 60) + (sec * pi / 6 / 60 / 60);
+  const minHand = (min * pi / 30) + (sec * pi / 30 / 60);
+  const secHand = (sec * pi / 30);
+  const ht =  rad * 2.2;
+
+  ctx.clearRect(-ht / 2, - ht / 2, ht, ht);
+  drawClockHand(ctx, hrHand, rad, 'hours');
+  drawClockHand(ctx, minHand, rad, 'minutes');
+  drawClockHand(ctx, secHand, rad, 'seconds');
+}
+
+
+function drawClockHand(ctx, ang, rad, hand) {
+  //console.log(ang, len, wid);
+  let len = 0;
+  let wid = 0;
+
+  ctx.beginPath();
+  switch(hand) {
+    case 'hours':
+      len = rad * .5;
+      wid = rad * .07;
+      ctx.strokeStyle = '#222';
+      break;
+    case 'minutes':
+      len = rad * .7;
+      wid = rad * .05;
+      ctx.strokeStyle = '#222';
+      break;
+    default:
+      len = rad * .8;
+      wid = rad * .02;
+      ctx.strokeStyle = '#C00';
+  }
+
+  //console.log(hand, Math.floor(ang * 180 / Math.PI), len, wid);
+
+  ctx.lineWidth = wid;
+  ctx.lineCap = 'round';
+  ctx.moveTo(0,0);
+  ctx.rotate(ang);
+  ctx.lineTo(0, -len);
+  ctx.stroke();
+  ctx.rotate(-ang);
 }
 
 
 
+
+
+function drawBounce() {
+  const bgCan = $('bounce-bg');
+  const bgCtx = bgCan.getContext('2d');
+  const ballCan = $('bounce-ball');
+  const ballCtx = ballCan.getContext('2d');
+
+  drawBounceBG();
+}
+
+function drawBounceBG() {}
+
+
+
+
+
+function drawTest() {
+  let can = $('canvas-2');
+  let ctx = can.getContext('2d');
+  let x = 0;
+  let y = 0;
+  let gradient = ctx.createLinearGradient(x, y, 800, 300);
+
+  gradient.addColorStop(0, 'green');
+  gradient.addColorStop(0.5, 'yellow');
+  gradient.addColorStop(1, 'red');
+
+  ctx.fillStyle = gradient;
+  ctx.textAlign = 'center';
+
+  ctx.fillRect(200, 250, 400, 50);
+  ctx.strokeRect(200, 250, 400, 50);
+  ctx.font = ('108px Comic Sans MS');
+  ctx.fillText('OooWeee!!!', can.width/2, can.height/2);
+  ctx.strokeText('OooWeee!!!', can.width/2, can.height/2);
+}
 
 
 
@@ -272,30 +411,17 @@ function resetGame() {
 
 function showAnswers() {
   const space = $(mcg.space);
-  console.log(space);
   const currState = mcg.state;
-  mcg.state = 'mcg-answers';
+  const answers = ['squirtle', 'dog', '13', 'sushi', 'coding'];
+
   let sum = 0;
   let responses = [];
-  const answers = ['squirtle', 'dog', '13', 'sushi', 'coding'];
-  for (let i = 0; i < 5; i++) {
-    responses[i] = $(`q${i+1}`).value;
-    if (responses[i] === answers[i]) {
-      sum++;
-    }
-  }
   let a1 = $('q1').value;
   let a2 = $('q2').value;
   let a3 = $('q3').value;
   let a4 = $('q4').value;
   let a5 = $('q5').value;
   let b = '';
-  console.log(responses);
-  if (mcg.firstTry) {
-    b = 'Trick question - it\'s ';
-  } else {
-    b = '';
-  }
   let newContent =
   `<div id="${mcg.state}">
       <h4>Answer Time...</h4>
@@ -319,13 +445,26 @@ function showAnswers() {
       <p>You got ${sum} out of 5 questions right!</p>
       <button id="retake" onclick="switchGameState()">Try again?</button>
   </div>`;
+
+  mcg.state = 'mcg-answers';
+
+  for (let i = 0; i < 5; i++) {
+    responses[i] = $(`q${i+1}`).value;
+    if (responses[i] === answers[i]) {
+      sum++;
+    }
+  }
+
+  if (mcg.firstTry) {
+    b = 'Trick question - it\'s ';
+  } else {
+    b = '';
+  }
+
   $(currState).remove();
   space.innerHTML += newContent;
   mcg.firstTry = false;
 }
-
-
-
 
 
 
@@ -337,6 +476,7 @@ function playGameFull() {
   let score2 = playGame3();
   let score3 = playGame4();
   let score = score1 + score2 + score3;
+
   alert(`${user}, your total score is: ${score}/7.`);
 }
 

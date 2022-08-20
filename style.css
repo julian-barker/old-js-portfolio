@@ -195,7 +195,7 @@ dt {
   background-color: lightgrey;
 }
 
-.graphics > *:not(:last-child) {
+.graphics > canvas:not(:last-of-type) {
   position: absolute;
 }
 

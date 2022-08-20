@@ -16,7 +16,7 @@ window.onload = function() {
   greet();
   drawClock();
   drawBounce();
-  drawTest();
+  //drawTest();
   playGameFull();
 };
 
@@ -34,323 +34,6 @@ function greet() {
   const block = $('user');
   block.innerHTML += user;
   alert(`Welcome, ${user}!`);
-}
-
-
-
-
-
-// game version 1 (as prescribed by reqs, prompted at page load)
-// 7 questions with a total score at the end
-// const upper = 25;
-// const questions = [
-//   ['Do I like Pokemon? (yes/no)', 'yes'],
-//   ['Do I have any pets? (yes/no)', 'yes'],
-//   ['Do I live on the East Coast? (yes/no)', 'no'],
-//   ['Do I play video games? (yes/no)', 'yes'],
-//   ['Have I gone skydiving (yes/no)', 'no'],
-//   ['Guess a number between 1 and 25', Math.floor(Math.random() * upper + 1)],
-//   ['Guess my favorite fruits', ['kiwi', 'pineapple', 'clementine', 'grapes', 'watermelon']]
-// ];
-
-// let totalScore = 0;
-
-// for(let i = 0; i < 7; i++) {
-//   if(i === 5) {
-//     //Question 6
-//     let lives = 4;
-//     const ans = questions[i][1];
-//     let correct = false;
-//     while(lives > 0) {
-//       let response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
-//       while(isNaN(response)) {
-//         alert('Only number inputs are valid');
-//         response = parseInt(prompt(`Guess a number between 1 and ${upper}. You have ${lives} guesses remaining.`));
-//       }
-//       if(response === ans) {
-//         alert(`You got it correct! It was ${response}`);
-//         totalScore++;
-//         correct = true;
-//         break;
-//       } else if(response < 1 || response > upper) {
-//         alert(`Please guess between 1 and ${upper}. You wasted a guess.`);
-//       } else if(response > ans) {
-//         alert('Too high!');
-//       } else {
-//         alert('Too low!');
-//       }
-//       lives--;
-//     }
-//     if(correct === false) {
-//       alert(`Sorry, out of lives! The correct answer was ${ans}`);
-//     }
-//   } else if(i === 6) {
-//     //Question 7
-//     let lives = 6;
-//     let correct = false;
-//     const answers = questions[i][1];
-//     console.log(answers);
-//     while(!correct) {
-//       while(lives > 0) {
-//         let response = prompt(`What is one of my favorite fruits? You have ${lives} guesses remaining.`);
-//         for (let ans of answers) {
-//           console.log(ans);
-//           if(ans === response) {
-//             alert(`You got it correct! The correct answers were ${answers}`);
-//             totalScore++;
-//             correct = true;
-//             lives = 0;
-//             break;
-//           }
-//         }
-//         lives--;
-//       }
-//       if(correct === false) {
-//         alert(`Sorry, out of lives! Correct answers were ${answers}`);
-//         break;
-//       }
-//     }
-//   } else {
-//     let response = '';
-//     let correct;
-//     while (!(response === 'yes' || response === 'no')) {
-//       response = prompt(`${questions[i][0]}`);
-//       if(typeof response === 'string') {
-//         response = response.toLowerCase();
-//       }
-//     }
-//     correct = (response === questions[i][1]);
-//     switch(correct) {
-//       case true:
-//         console.log(`Question ${i+1}:
-//         Your response (${response}) is correct!`);
-//         alert('correct!');
-//         totalScore++;
-//         console.log(totalScore);
-//         break;
-//       default:
-//         console.log(`Question ${i+1}:
-//         Your response (${response}) is incorrect...`);
-//         alert('Sorry, incorrect');
-//     }
-//     if(i === 4) {
-//       let msg = `You got ${totalScore}/5 correct.`;
-//       console.log(msg);
-//       alert(msg);
-//     }
-//   }
-// }
-// alert(`Your total score is ${totalScore}/7!`);
-
-
-
-
-
-function drawClock() {
-  const can = $('clock-face');
-  const canHands = $('clock-hands');
-  const ctx = can.getContext('2d');
-  const ctxHands = canHands.getContext('2d');
-
-  const rad = can.width / 2 * .8;
-  const width = can.width;
-  const height = can.height;
-  const grad = ctx.createLinearGradient(0, 0, width, height);
-
-  ctx.fillStyle = grad;
-  grad.addColorStop(0, 'magenta');
-  grad.addColorStop(.5, 'yellow');
-  grad.addColorStop(1, 'cyan');
-  ctx.fillRect(0, 0, width, height);
-  ctx.translate(width / 2, height / 2);
-  ctxHands.translate(canHands.width / 2, canHands.height / 2);
-
-  drawClockFace(ctx, rad);
-  drawClockNums(ctx, rad);
-  setInterval(drawTime, 1000, ctxHands, rad);
-}
-
-
-function drawClockFace(ctx, rad) {
-  const pi = Math.PI;
-  const grad = ctx.createRadialGradient(0, 0, rad * .95, 0, 0, rad * 1.05);
-
-  grad.addColorStop(0, '#222');
-  grad.addColorStop(.5, '#BBB');
-  grad.addColorStop(1, '#222');
-
-  ctx.fillStyle = '#DDD';
-  ctx.ellipse(0, 0, rad, rad, 0, 0, 2 * pi);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.strokeStyle = grad;
-  ctx.lineWidth = rad * .1;
-  ctx.arc(0, 0, rad, 0, 2 * pi);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.fillStyle = '#222';
-  ctx.ellipse(0, 0, rad * .05, rad * .05, 0, 0, 2 * pi);
-  ctx.fill();
-}
-
-
-function drawClockNums(ctx, rad) {
-  const dist = rad * .85;
-
-  ctx.font = '18px Arial';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-
-  for (let i = 1; i < 13; i++) {
-    const a = Math.PI / 6 * i;
-    //ctx.beginPath();
-    ctx.rotate(a);
-    ctx.translate(0, -dist);
-    ctx.rotate(-a);
-    ctx.fillText(i, 0, 1);
-    ctx.rotate(a);
-    ctx.translate(0, dist);
-    ctx.rotate(-a);
-  }
-}
-
-
-function drawTime(ctx, rad) {
-  const pi = Math.PI;
-  const now = new Date();
-  const hrs = now.getHours();
-  const min = now.getMinutes();
-  const sec = now.getSeconds();
-  const hrHand = ((hrs % 12) * pi / 6) + (min * pi / 6 / 60) + (sec * pi / 6 / 60 / 60);
-  const minHand = (min * pi / 30) + (sec * pi / 30 / 60);
-  const secHand = (sec * pi / 30);
-  const ht =  rad * 2.2;
-
-  ctx.clearRect(-ht / 2, - ht / 2, ht, ht);
-  drawClockHand(ctx, hrHand, rad, 'hours');
-  drawClockHand(ctx, minHand, rad, 'minutes');
-  drawClockHand(ctx, secHand, rad, 'seconds');
-}
-
-
-function drawClockHand(ctx, ang, rad, hand) {
-  //console.log(ang, len, wid);
-  let len = 0;
-  let wid = 0;
-
-  ctx.beginPath();
-  switch(hand) {
-    case 'hours':
-      len = rad * .5;
-      wid = rad * .07;
-      ctx.strokeStyle = '#222';
-      break;
-    case 'minutes':
-      len = rad * .7;
-      wid = rad * .05;
-      ctx.strokeStyle = '#222';
-      break;
-    default:
-      len = rad * .8;
-      wid = rad * .02;
-      ctx.strokeStyle = '#C00';
-  }
-
-  //console.log(hand, Math.floor(ang * 180 / Math.PI), len, wid);
-
-  ctx.lineWidth = wid;
-  ctx.lineCap = 'round';
-  ctx.moveTo(0,0);
-  ctx.rotate(ang);
-  ctx.lineTo(0, -len);
-  ctx.stroke();
-  ctx.rotate(-ang);
-}
-
-
-
-
-
-function drawBounce() {
-  const bgCan = $('bounce-bg');
-  const bgCtx = bgCan.getContext('2d');
-  const ballCan = $('bounce-ball');
-  const ballCtx = ballCan.getContext('2d');
-  const rad = 15;
-  const groundLevel = 60;
-
-  drawBounceBG(bgCan, bgCtx, groundLevel);
-  setInterval(drawBounceBall, 20, ballCan, ballCtx, groundLevel, rad);
-}
-
-function drawBounceBG(can, ctx, ground) {
-  const wid = can.width;
-  const ht = can.height;
-  const grad = ctx.createLinearGradient(0, 0, 0, ht);
-
-  grad.addColorStop(0, 'cyan');
-  grad.addColorStop(.5, 'pink');
-  grad.addColorStop(1, 'orange');
-
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, wid, ht);
-  ctx.fillStyle = 'saddlebrown';
-  ctx.fillRect(0, ht - ground, wid, ground);
-  ctx.fillStyle = 'green';
-  ctx.fillRect(0, ht - ground, wid, 15);
-  ctx.strokeRect(0, ht - ground, wid, 15);
-  ctx.strokeRect(0, ht - ground, wid, ground);
-}
-
-function drawBounceBall(can, ctx, ground, rad) {
-  const now = new Date();
-  const s = now.getSeconds();
-  const ms = now.getMilliseconds() / 1000;
-  const t = s%6 + ms;
-  // console.log(t);
-  const x = can.width / 6 * t;
-  const y = can.height - (Math.abs(Math.sin(t*Math.PI - Math.PI/4*3)) * can.height * .6) - ground - rad + 5;
-  //console.log(y);
-
-  ctx.clearRect(0, 0, can.width, can.height);
-  ctx.beginPath();
-  ctx.fillStyle = '#444';
-  ctx.ellipse(x, y, rad, rad, 0, 0, 2 * Math.PI);
-  ctx.fill();
-  return can, ctx;
-}
-
-
-
-
-
-function drawTest() {
-  let can = $('canvas-2');
-  let ctx = can.getContext('2d');
-  let gradient = ctx.createLinearGradient(0, 0, 800, 300);
-
-  gradient.addColorStop(0, 'green');
-  gradient.addColorStop(0.5, 'yellow');
-  gradient.addColorStop(1, 'red');
-
-  ctx.fillStyle = gradient;
-  ctx.textAlign = 'center';
-
-  // ctx.fillRect(200, 200, 400, 50);
-  // ctx.strokeRect(200, 200, 400, 50);
-  ctx.font = ('108px Comic Sans MS');
-  ctx.fillText('OooWeee!!!', can.width/2, can.height/2);
-  ctx.strokeText('OooWeee!!!', can.width/2, can.height/2);
-
-  ctx.beginPath();
-  ctx.strokeStyle = gradient;
-  ctx.lineWidth = 20;
-  ctx.lineCap = 'round';
-  ctx.moveTo(150, 230);
-  for (let i = 0; i < 200; i++) {
-    ctx.lineTo(150 + 2.5*i, Math.sin(i/50*Math.PI)*30 + 230);
-  }
-  ctx.stroke();
 }
 
 
@@ -657,4 +340,215 @@ function playGame4() {
   Your guesses were ${myGuesses}.
   Possible answers were ${answers}.`);
   return 0;
+}
+
+
+
+
+
+function drawClock() {
+  const can = $('clock-face');
+  const canHands = $('clock-hands');
+  const ctx = can.getContext('2d');
+  const ctxHands = canHands.getContext('2d');
+
+  const rad = can.width / 2 * .8;
+  const width = can.width;
+  const height = can.height;
+  const grad = ctx.createLinearGradient(0, 0, width, height);
+
+  ctx.fillStyle = grad;
+  grad.addColorStop(0, 'magenta');
+  grad.addColorStop(.5, 'yellow');
+  grad.addColorStop(1, 'cyan');
+  ctx.fillRect(0, 0, width, height);
+  ctx.translate(width / 2, height / 2);
+  ctxHands.translate(canHands.width / 2, canHands.height / 2);
+
+  drawClockFace(ctx, rad);
+  drawClockNums(ctx, rad);
+  setInterval(drawTime, 1000, ctxHands, rad);
+}
+
+
+function drawClockFace(ctx, rad) {
+  const pi = Math.PI;
+  const grad = ctx.createRadialGradient(0, 0, rad * .95, 0, 0, rad * 1.05);
+
+  grad.addColorStop(0, '#222');
+  grad.addColorStop(.5, '#BBB');
+  grad.addColorStop(1, '#222');
+
+  ctx.fillStyle = '#DDD';
+  ctx.ellipse(0, 0, rad, rad, 0, 0, 2 * pi);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = rad * .1;
+  ctx.arc(0, 0, rad, 0, 2 * pi);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.fillStyle = '#222';
+  ctx.ellipse(0, 0, rad * .05, rad * .05, 0, 0, 2 * pi);
+  ctx.fill();
+}
+
+
+function drawClockNums(ctx, rad) {
+  const dist = rad * .85;
+
+  ctx.font = '18px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  for (let i = 1; i < 13; i++) {
+    const a = Math.PI / 6 * i;
+    //ctx.beginPath();
+    ctx.rotate(a);
+    ctx.translate(0, -dist);
+    ctx.rotate(-a);
+    ctx.fillText(i, 0, 1);
+    ctx.rotate(a);
+    ctx.translate(0, dist);
+    ctx.rotate(-a);
+  }
+}
+
+
+function drawTime(ctx, rad) {
+  const pi = Math.PI;
+  const now = new Date();
+  const hrs = now.getHours();
+  const min = now.getMinutes();
+  const sec = now.getSeconds();
+  const hrHand = ((hrs % 12) * pi / 6) + (min * pi / 6 / 60) + (sec * pi / 6 / 60 / 60);
+  const minHand = (min * pi / 30) + (sec * pi / 30 / 60);
+  const secHand = (sec * pi / 30);
+  const ht =  rad * 2.2;
+
+  ctx.clearRect(-ht / 2, - ht / 2, ht, ht);
+  drawClockHand(ctx, hrHand, rad, 'hours');
+  drawClockHand(ctx, minHand, rad, 'minutes');
+  drawClockHand(ctx, secHand, rad, 'seconds');
+}
+
+
+function drawClockHand(ctx, ang, rad, hand) {
+  //console.log(ang, len, wid);
+  let len = 0;
+  let wid = 0;
+
+  ctx.beginPath();
+  switch(hand) {
+    case 'hours':
+      len = rad * .5;
+      wid = rad * .07;
+      ctx.strokeStyle = '#222';
+      break;
+    case 'minutes':
+      len = rad * .7;
+      wid = rad * .05;
+      ctx.strokeStyle = '#222';
+      break;
+    default:
+      len = rad * .8;
+      wid = rad * .02;
+      ctx.strokeStyle = '#C00';
+  }
+
+  //console.log(hand, Math.floor(ang * 180 / Math.PI), len, wid);
+
+  ctx.lineWidth = wid;
+  ctx.lineCap = 'round';
+  ctx.moveTo(0,0);
+  ctx.rotate(ang);
+  ctx.lineTo(0, -len);
+  ctx.stroke();
+  ctx.rotate(-ang);
+}
+
+
+
+
+
+function drawBounce() {
+  const bgCan = $('bounce-bg');
+  const bgCtx = bgCan.getContext('2d');
+  const ballCan = $('bounce-ball');
+  const ballCtx = ballCan.getContext('2d');
+  const rad = 15;
+  const groundLevel = 60;
+
+  drawBounceBG(bgCan, bgCtx, groundLevel);
+  setInterval(drawBounceBall, 20, ballCan, ballCtx, groundLevel, rad);
+}
+
+function drawBounceBG(can, ctx, ground) {
+  const wid = can.width;
+  const ht = can.height;
+  const grad = ctx.createLinearGradient(0, 0, 0, ht);
+
+  grad.addColorStop(0, 'cyan');
+  grad.addColorStop(.5, 'pink');
+  grad.addColorStop(1, 'orange');
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, wid, ht);
+  ctx.fillStyle = 'saddlebrown';
+  ctx.fillRect(0, ht - ground, wid, ground);
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, ht - ground, wid, 15);
+  ctx.strokeRect(0, ht - ground, wid, 15);
+  ctx.strokeRect(0, ht - ground, wid, ground);
+}
+
+function drawBounceBall(can, ctx, ground, rad) {
+  const now = new Date();
+  const s = now.getSeconds();
+  const ms = now.getMilliseconds() / 1000;
+  const t = s%6 + ms;
+  // console.log(t);
+  const x = can.width / 6 * t;
+  const y = can.height - (Math.abs(Math.sin(t*Math.PI - Math.PI/4*3)) * can.height * .6) - ground - rad + 5;
+  //console.log(y);
+
+  ctx.clearRect(0, 0, can.width, can.height);
+  ctx.beginPath();
+  ctx.fillStyle = '#444';
+  ctx.ellipse(x, y, rad, rad, 0, 0, 2 * Math.PI);
+  ctx.fill();
+  return can, ctx;
+}
+
+
+
+
+
+function drawTest() {
+  let can = $('canvas-2');
+  let ctx = can.getContext('2d');
+  let gradient = ctx.createLinearGradient(0, 0, 800, 300);
+
+  gradient.addColorStop(0, 'green');
+  gradient.addColorStop(0.5, 'yellow');
+  gradient.addColorStop(1, 'red');
+
+  ctx.fillStyle = gradient;
+  ctx.textAlign = 'center';
+
+  // ctx.fillRect(200, 200, 400, 50);
+  // ctx.strokeRect(200, 200, 400, 50);
+  ctx.font = ('108px Comic Sans MS');
+  ctx.fillText('OooWeee!!!', can.width/2, can.height/2);
+  ctx.strokeText('OooWeee!!!', can.width/2, can.height/2);
+
+  ctx.beginPath();
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 20;
+  ctx.lineCap = 'round';
+  ctx.moveTo(150, 230);
+  for (let i = 0; i < 200; i++) {
+    ctx.lineTo(150 + 2.5*i, Math.sin(i/50*Math.PI)*30 + 230);
+  }
+  ctx.stroke();
 }

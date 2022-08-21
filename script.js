@@ -17,7 +17,7 @@ window.onload = function() {
   drawClock();
   drawBounce();
   //drawTest();
-  playGameFull();
+  //playGameFull();
 };
 
 
@@ -32,7 +32,7 @@ function greet() {
   }
   console.log('Name: ' + user);
   const block = $('user');
-  block.innerHTML += user;
+  block.innerHTML += `<b>${user}</b>`;
   alert(`Welcome, ${user}!`);
 }
 
@@ -346,6 +346,7 @@ function playGame4() {
 
 
 
+// draw an analog clock
 function drawClock() {
   const can = $('clock-face');
   const canHands = $('clock-hands');
@@ -470,7 +471,7 @@ function drawClockHand(ctx, ang, rad, hand) {
 
 
 
-
+// make a bouncing ball
 function drawBounce() {
   const bgCan = $('bounce-bg');
   const bgCtx = bgCan.getContext('2d');
@@ -524,6 +525,51 @@ function drawBounceBall(can, ctx, ground, rad) {
 
 
 
+// make a very basic pong game
+function pongGame() {
+  const bgCanvas = $('pong-bg');
+  const objCanvas = $('pong-obj');
+  const bgCtx = bgCanvas.getContext('2d');
+  const objCtx = objCanvas.getContext('2d');
+  const score = {
+    player: 0,
+    robot: 0
+  }
+
+
+  bgCtx.fillStyle = 'black';
+  bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+  while (score.player < 10 && score.robot < 10) {
+    updatePong(objCanvas, objCtx, score);
+  }
+  if (score.player === 10) {
+
+    return;
+  }
+}
+
+
+function updatePong(can, ctx, score) {
+
+
+
+  updateScore(can, ctx);
+}
+
+
+function updateScore(can, ctx, score) {
+
+
+
+  return can, ctx;
+}
+
+
+
+
+
+// draw some random stuff
 function drawTest() {
   let can = $('canvas-2');
   let ctx = can.getContext('2d');

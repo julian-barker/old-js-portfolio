@@ -10,30 +10,33 @@
 </head>
 <body>
     <header>
-        <div id="top-bar">
-            <div class="logo"><img src="./images/logo.jpeg" alt="Logo" width="120px" height="120px"></div>
-            <div id="bar-content">
-                <h2>A Pretty Neat Site</h2>
-                <nav>
-                    <ul>
-                        <li><a href="./">Link 1</a></li>
-                        <li><a href="./">Link 2</a></li>
-                        <li><a href="./">Link 3</a></li>
-                        <li><a href="./">Link 4</a></li>
-                        <li><a href="./">Link 5</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="logo"><img src="./images/logo.jpeg" alt="Logo" width="120px" height="120px"></div>
+        <div class="logo"><img src="./images/logo.jpeg" alt="Logo" width="120px" height="120px"></div>
+        <div id="bar-content">
+            <h2>A Pretty Neat Site</h2>
+            <nav>
+                <ul>
+                    <li><a href="./">Link 1</a></li>
+                    <li><a href="./">Link 2</a></li>
+                    <li><a href="./">Link 3</a></li>
+                    <li><a href="./">Link 4</a></li>
+                    <li><a href="./">Link 5</a></li>
+                </ul>
+            </nav>
         </div>
+        <div class="logo"><img src="./images/logo.jpeg" alt="Logo" width="120px" height="120px"></div>
     </header>
     <main>
-        <h1>BarkCoder</h1>
-        <p>
-            Hi <span id="user"></span>, I'm Julian!<br>I'm a <em>junior software developer</em> who loves <em>building</em> on the web, 
-            <em>learning</em> about new tools and frameworks, and <em>expanding</em> my knowledge into other 
-            fields like cyber security, AI/ML, and blockchain / distributed ledger technologies.
-        </p>
+        <h1>BarkCodes</h1>
+        <div id="blurb">
+            <p>
+                Hi <span id="user"></span>, I'm Julian!
+            </p>
+            <p>
+                I'm a <em>junior software developer</em> who loves <em>building</em> on the web, 
+                <em>learning</em> about new tools and frameworks, and <em>expanding</em> my knowledge into other 
+                fields like cyber security, AI/ML, and blockchain / distributed ledger technologies.
+            </p>
+        </div>
         <section id="quizzes">
             <h3>Game Area!</h3>
             <div id="quiz1">
@@ -138,6 +141,10 @@
             <div class="graphics" id="bounce">
                 <canvas id="bounce-ball" width="600px" height="300px"></canvas>
                 <canvas id="bounce-bg" width="600px" height="300px"></canvas>
+            </div>
+            <div class="graphics" id="pong">
+                <canvas id="pong-obj" width="600px" height="300px"></canvas>
+                <canvas id="pong-bg" width="600px" height="300px"></canvas>
             </div>
             <div class="graphics">
                 <canvas id="canvas-2" width="800px" height="300px"></canvas>

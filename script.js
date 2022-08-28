@@ -16,7 +16,7 @@ window.onload = function() {
   greet();
   drawClock();
   drawBounce();
-  //drawTest();
+  // drawTest();
   playGameFull();
 };
 
